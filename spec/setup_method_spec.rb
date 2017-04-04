@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 RSpec.describe FollowUser do
 
-  context 'not already following' do
+  describe "when one user follows another" do
 
     def setup_follow
       new_follower = User.new
@@ -22,7 +22,7 @@ RSpec.describe FollowUser do
     end
   end
 
-  context 'blocked' do
+  describe "when a user blocks someone who wants to follow them" do
 
     def setup_blocked_follow
       follower = User.new
