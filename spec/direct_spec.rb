@@ -14,15 +14,13 @@ RSpec.describe FollowUser do
   context 'not already following' do
     let(:followee) { new_followee }
 
-    before do
-      subject.call
-    end
-
     it 'lets the follower see the new followee' do
+      subject.call
       expect(follower.followees).to include(followee)
     end
 
     it 'lets the followee see the new follower' do
+      subject.call
       expect(followee.followers).to include(follower)
     end
   end
@@ -30,15 +28,13 @@ RSpec.describe FollowUser do
   context 'blocked' do
     let(:followee) { blocking_followee }
 
-    before do
-      subject.call
-    end
-
     it 'does not let the follower see the new followee' do
+      subject.call
       expect(follower.followees).not_to include(followee)
     end
 
     it 'does not let the followee see the new follower' do
+      subject.call
       expect(followee.followers).not_to include(follower)
     end
   end
