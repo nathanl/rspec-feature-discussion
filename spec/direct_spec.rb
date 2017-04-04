@@ -9,33 +9,27 @@ RSpec.describe FollowUser do
     blocking_followee.blocked << follower
   end
 
-  subject { FollowUser.new(follower: follower, followee: followee) }
-
   context 'not already following' do
-    let(:followee) { new_followee }
-
     it 'lets the follower see the new followee' do
-      subject.call
-      expect(follower.followees).to include(followee)
+      FollowUser.new(follower: follower, followee: new_followee).call
+      expect(follower.followees).to include(new_followee)
     end
 
     it 'lets the followee see the new follower' do
-      subject.call
-      expect(followee.followers).to include(follower)
+      FollowUser.new(follower: follower, followee: new_followee).call
+      expect(new_followee.followers).to include(follower)
     end
   end
 
   context 'blocked' do
-    let(:followee) { blocking_followee }
-
     it 'does not let the follower see the new followee' do
-      subject.call
-      expect(follower.followees).not_to include(followee)
+      FollowUser.new(follower: follower, followee: blocking_followee).call
+      expect(follower.followees).not_to include(blocking_followee)
     end
 
     it 'does not let the followee see the new follower' do
-      subject.call
-      expect(followee.followers).not_to include(follower)
+      FollowUser.new(follower: follower, followee: blocking_followee).call
+      expect(blocking_followee.followers).not_to include(follower)
     end
   end
 
